@@ -18,6 +18,13 @@ let query = args.dropFirst().joined(separator: " ")
 let documents = loadDocuments(from: dirPath)
 let results = search(query: query, in: documents)
 
+guard !results.isEmpty else {
+  print("\u{001B}[0;31mNo results found")
+  exit(0)
+}
+
 for result in results {
   print("\u{001B}[0;32m\(result)")
 }
+
+exit(0)
