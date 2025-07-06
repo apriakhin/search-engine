@@ -11,12 +11,21 @@ on:
 
 jobs:
   build:
-
-    runs-on: macos-latest
+    runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Swift 6 manually
+      run: |
+        wget https://download.swift.org/swift-6.0-release/ubuntu2204/swift-6.0-RELEASE/swift-6.0-RELEASE-ubuntu22.04.tar.gz
+        tar -xvzf swift-6.0-RELEASE-ubuntu22.04.tar.gz
+        sudo mv swift-6.0-RELEASE-ubuntu22.04 /usr/share/swift
+        echo "/usr/share/swift/usr/bin" >> $GITHUB_PATH
+
     - name: Build
       run: swift build -v
+
     - name: Run tests
       run: swift test -v
